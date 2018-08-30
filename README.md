@@ -11,7 +11,7 @@ Chess is a *static game of complete information*, meaning we can measure how fav
 
 The following is a diagram of the tree structure I used to represent the problem. Each MMNode holds information about the current board state and move that lead to the state. This is an example of a minimax tree, each level of the tree is either a minimising level or a maximizing level, in other words whether its the oponent's turn to play or yours; if it's yours you want to maximize the board value (or score), because we want a favorable board. WIth this strategy we can usually analyse up to a few moves forward, as it takes about O(30^n), where n is the depth of the tree. I, therefore, implemented alpha-beta pruning, and algorithm which allows us to cut off big portions of the game of the tree, saving us computing time (in particular we can expect to take O(30^n/2) = O(sqrt(30^n))).
 
-![alt text](https://github.com/nickpezzotti1/ChessAI/blob/master/Untitled%20Diagram.png "Example minimax")
+![alt text](https://github.com/nickpezzotti1/ChessAI/blob/master/MinimaxTree.png "Example gamet-tree")
 
 After numerous development iterations, I decided to develop it on the skeleton of the standard industry version of alpha beta pruning, as seen [here](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning#Pseudocode). It had to be adapted as it uses recursive calls to build the game tree, and traces its way back up to the root node, returning the score of the best board we can achieve with one move. We must later loop through the legal moves until we find one that leads to that board.
 
