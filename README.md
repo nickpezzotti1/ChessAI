@@ -13,48 +13,19 @@ The following is a diagram of the tree structure I used to represent the problem
 
 ![alt text](https://github.com/nickpezzotti1/ChessAI/blob/master/Untitled%20Diagram.png "Example minimax")
 
-The following is the code for the alphabeta pruning minimax tree I developed, it uses recursive calls to build the game tree, and traces its way back up to the root node, returning the score of the best board we can achieve with one move.
+After numerous development iterations, I decided to develop it on the skeleton of the standard industry version of alpha beta pruning, as seen [here](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning#Pseudocode). It had to be adapted as it uses recursive calls to build the game tree, and traces its way back up to the root node, returning the score of the best board we can achieve with one move. We must later loop through the legal moves until we find one that leads to that board.
+
 ```
-private static int alphabeta(MMNode node, int depth, int alpha, int beta, boolean maximizingPlayer) throws MoveGeneratorException {
-    if (depth == 0) return ChessEvaluation.evaluateBoard(node.getBoard());
-    if (maximizingPlayer) {
-        node.setScore(maximize(node, depth, alpha, beta, maximizingPlayer));
-        return node.getScore();
-    } else {
-        node.setScore(minimize(node, depth, alpha, beta, maximizingPlayer));
-        return node.getScore();
+int bestScore = alphabeta(root, depth, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+MMNode bestChild = null;
+for (MMNode child : root.getChildren()) {
+    if (child.getScore() == bestScore) {
+    bestChild = child;
     }
-}
-
-private static int minimize(MMNode node, int depth, int alpha, int beta, boolean maximizingPlayer) throws MoveGeneratorException {
-    int value = Integer.MAX_VALUE;
-    MoveList moves = MoveGenerator.generateLegalMoves(node.getBoard());
-    moves.forEach(move -> {
-        Board newBoard = node.getBoard().clone();
-        newBoard.doMove(move);
-        node.addChild(newBoard, move);
-    });
-    for (MMNode childNode : node.getChildren()) {
-        value = min(value, alphabeta(childNode, depth -1, alpha, beta, false));
-        alpha = min(alpha, value);
-        if (alpha >= beta) break;
-    }
-    return value;
-}
-
-private static int maximize(MMNode node, int depth, int alpha, int beta, boolean maximizingPlayer) throws MoveGeneratorException {
-    int value = Integer.MIN_VALUE;
-    MoveList moves = MoveGenerator.generateLegalMoves(node.getBoard());
-    moves.forEach(move -> {
-        Board newBoard = node.getBoard().clone();
-        newBoard.doMove(move);
-        node.addChild(newBoard, move);
-    });
-    for (MMNode childNode : node.getChildren()) {
-        value = max(value, alphabeta(childNode, depth -1, alpha, beta, false));
-        alpha = max(alpha, value);
-        if (alpha >= beta) break;
-    }
-    return value;
 }
 ```
+***
+# Possible improvements
+1. Replacing the evaluation function with a more detailed and complicated one, for example favoring bishop pairs over knight pairs
+2. The best chess computers have hardcoded opening strategies and end game strategies
+3. Parallelize the search tree using Java ParallelStreams
