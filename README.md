@@ -23,7 +23,7 @@ for (MMNode child : root.getChildren()) {
     bestChild = child;
 }
 ```
-***
+
 # Possible improvements
 1. Replacing the evaluation function with a more detailed and complicated one, for example favoring bishop pairs over knight pairs
 2. The best chess computers have hardcoded opening strategies and end game strategies
