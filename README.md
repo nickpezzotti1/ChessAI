@@ -21,7 +21,6 @@ MMNode bestChild = null;
 for (MMNode child : root.getChildren()) {
     if (child.getScore() == bestScore) {
     bestChild = child;
-    }
 }
 ```
 ***
