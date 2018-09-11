@@ -28,3 +28,4 @@ for (MMNode child : root.getChildren()) {
 1. Replacing the evaluation function with a more detailed and complicated one, for example favoring bishop pairs over knight pairs
 2. The best chess computers have hardcoded opening strategies and end game strategies
 3. Parallelize the search tree using Java ParallelStreams
+4. I theorize (haven't thourughly studied it though) that if going deep enough into the game tree you can run into cycles, for examples wheter I start off with  e4 e5 + Nf3 Nc6 or  Nf3 Nc6 + e4 e5, the resulting board is the same, and so will all the children of those nodes will be, so there is no need to recompute for duplicate nodes, we could perhaps have some sort of smart memoisation that is able to recognised if a board has been seen before.
